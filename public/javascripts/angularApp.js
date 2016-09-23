@@ -2,19 +2,7 @@ var app = angular.module('kokonatsu', ['ui.router']);
 
 app.factory('macros', ['$http', function($http){
     var o = {
-        macros: [
-            {
-                _id: {
-                    $oid: "57e42a563267390010009820"
-                },
-                guild: "137974531175350272",
-                macro: "aa",
-                links: [
-                    "http://i.imgur.com/ezHbFKc.gif",
-                    "http://www.planwallpaper.com/static/images/which-anime-character-are-you-quiz.jpg"
-                ]
-            }
-        ]
+        macros: []
     };
 
     o.getAll = function(){

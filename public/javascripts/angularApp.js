@@ -3,51 +3,29 @@ var app = angular.module('kokonatsu', ['ui.router']);
 app.factory('macros', ['$http', function($http){
     var o = {
         macros: [
-        //     {
-        //         text: "https://media.giphy.com/media/10E0y3sVPdnGus/giphy.gif",
-        //         macro: "title"
-        //     },
-        //     {
-        //         text: "https://media.giphy.com/media/zUebpNrzGZX68/giphy.gif",
-        //         macro: "title"
-        //     },
-        //     {
-        //         text: "https://media.giphy.com/media/zUebpNrzGZX68/giphy.gif",
-        //         macro: "title"
-        //     },
-        //     {
-        //         text: "https://media.giphy.com/media/zUebpNrzGZX68/giphy.gif",
-        //         macro: "title"
-        //     },
-        //     {
-        //         text: "https://media.giphy.com/media/zUebpNrzGZX68/giphy.gif",
-        //         macro: "title"
-        //     },
-        //     {
-        //         text: "https://media.giphy.com/media/zUebpNrzGZX68/giphy.gif",
-        //         macro: "title"
-        //     },
-        //     {
-        //         text: "https://media.giphy.com/media/zUebpNrzGZX68/giphy.gif",
-        //         macro: "title"
-        //     },
-        //     {
-        //         text: "https://media.giphy.com/media/zUebpNrzGZX68/giphy.gif",
-        //         macro: "title"
-        //     },
-        //     {
-        //         text: "https://media.giphy.com/media/zUebpNrzGZX68/giphy.gif",
-        //         macro: "title"
-        //     }
+            {
+                _id: {
+                    $oid: "57e42a563267390010009820"
+                },
+                guild: "137974531175350272",
+                macro: "aa",
+                links: [
+                    "http://i.imgur.com/ezHbFKc.gif",
+                    "http://www.planwallpaper.com/static/images/which-anime-character-are-you-quiz.jpg"
+                ]
+            }
         ]
     };
 
     o.getAll = function(){
         return $http.get('/macros').success(function(data){
             data.forEach(function(macro){
-                if(macro.text.endsWith("gifv")){
-                    macro.text = macro.text.replace("gifv", "mp4");
-                }
+                macro.links.forEach(function(link, i){
+                    console.log( typeof(link));
+                    if(String(link).endsWith("gifv")){
+                        macro.links[i] = link.replace("gifv", "mp4");
+                    }
+                });
             });
 
             angular.copy(data, o.macros);

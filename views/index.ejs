@@ -24,7 +24,7 @@
 
     <script type="text/ng-template" id="/home.html">
       <div class="row" style="text-align: center">
-        <div class="col-md-12" ng-repeat="macro in macros" style="width:400px">
+        <div class="col-md-12" ng-repeat="macro in macros | orderBy: 'macro'" style="width:400px">
           <div align="center"><h3>{{macro.macro}}</h3></div>
           <div align="center" ng-if="img(macro.text)"><img src="{{macro.text}}" class="img-thumbnail" style="float: left; width:100%; height:auto; display:inline-block"></div>
           <div align="center" ng-if="video(macro.text)"><video preload="auto" autoplay="autoplay" loop="loop" style="float: left; width:100%; height:auto; display:inline-block">

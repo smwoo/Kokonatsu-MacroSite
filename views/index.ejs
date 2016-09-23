@@ -29,8 +29,8 @@
             <div class="clearfix" ng-if="$index % 3 == 0"></div>
             <div align="center" ng-repeat= "link in macro.links" style="float:left; height:350px">
               <span align="center"><h3>{{macro.macro}}<span ng-if="macro.links.length > 1"> ({{$index+1}})</span></h3></span>
-              <img class="col-md-4" src="{{link}}" class="img-thumbnail" ng-if="img(link)" style="float: left; width:500px; height:281px; display:inline-block">
-              <video class="col-md-4" ng-if="video(link)" preload="auto" autoplay="autoplay" loop="loop" style="float: left; width:500px; max-height:281; display:inline-block">
+              <img align="center" class="col-md-4" src="{{link}}" class="img-thumbnail" ng-if="img(link)" style="; width:500px; height:281px; display:inline-block">
+              <video align="center" class="col-md-4" ng-if="video(link)" preload="auto" autoplay="autoplay" loop="loop" style="float: left; width:500px; max-height:281; display:inline-block">
                 <source src="{{trustAsResourceUrl(link)}}" type="video/mp4"></source>
               </video>
             </div>

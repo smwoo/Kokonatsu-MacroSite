@@ -34,7 +34,7 @@
               <video align="center" class="col-md-4" ng-if="video(link)" preload="auto" autoplay="autoplay" loop="loop" style="float: left; width:500px; max-height:281px; display:inline-block">
                 <source src="{{trustAsResourceUrl(link)}}" type="video/mp4"></source>
               </video>
-			  <div class='gfyitem' data-id='{{gyfcatDataID(link)}}' ng-if="gyfcat(link)" style="float: left; width:500px; max-height:281px; display:inline-block"></div>
+			  <div class='gfyitem' data-id="{{gfycatDataID(link)}}" ng-if="gfycat(link)" style="float: left; width:500px; max-height:281px; display:inline-block"></div>
               </a>
             </div>
           </div>

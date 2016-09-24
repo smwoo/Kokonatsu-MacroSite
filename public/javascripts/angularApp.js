@@ -30,14 +30,14 @@ app.controller('MainCtrl', [
 function($sce, $scope, macros){
     $scope.macros = macros.macros;
 
-    $scope.gyfcat = function(link) {
+    $scope.gfycat = function(link) {
         if(link.includes("gfycat.com")) return true;
         return false;
     }
     
-    $scope.gyfcatDataID = function(link) {
+    $scope.gfycatDataID = function(link) {
         var index = link.lastIndexOf("/");
-        return index.substring(index+1);
+        return link.substring(index+1);
     }
     
     $scope.video = function(link){

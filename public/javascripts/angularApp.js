@@ -51,6 +51,10 @@ function($sce, $scope, macros){
     };
 
     $scope.trustAsResourceUrl = $sce.trustAsResourceUrl;
+    
+     $scope.$on('$viewContentLoaded', function(){
+        gfyCollection.init();
+    });
 }]);
 
 app.config([

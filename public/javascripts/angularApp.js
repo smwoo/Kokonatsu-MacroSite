@@ -31,7 +31,7 @@ function($sce, $scope, macros){
     $scope.macros = macros.macros;
 
     $scope.gyfcat = function(link) {
-        if(link.includes("gyfcat")) return true;
+        if(link.includes("gfycat.com")) return true;
         return false;
     }
     
@@ -46,7 +46,7 @@ function($sce, $scope, macros){
     };
 
     $scope.img = function(link){
-        if(link.endsWith("mp4")) return false;
+        if(link.endsWith("mp4") || link.includes("gfycat.com")) return false;
         return true;
     };
 

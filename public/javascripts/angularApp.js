@@ -85,12 +85,7 @@ app.directive('controller', function() {
                 $scope.$evalAsync(function() {
                     // Finally, directives are evaluated
                     // and templates are renderer here
-                    var children = element.children();
-                    console.log(children);
-                    console.log("test");
-                    console.log(gfyCollection);
-                    gfyCollection.init();
-                    setTimeout(function() {gfyCollection.init();}, 6000);
+                    setTimeout(function() {gfyCollection.init();}, 2000);
                 });
             });
         },

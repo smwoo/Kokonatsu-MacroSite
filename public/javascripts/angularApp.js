@@ -30,6 +30,16 @@ app.controller('MainCtrl', [
 function($sce, $scope, macros){
     $scope.macros = macros.macros;
 
+    $scope.gyfcat = function(link) {
+        if(link.includes("gyfcat")) return true;
+        return false;
+    }
+    
+    $scope.gyfcatDataID = function(link) {
+        var index = link.lastIndexOf("/");
+        return index.substring(index+1);
+    }
+    
     $scope.video = function(link){
         if(link.endsWith("mp4")) return true;
         return false;

@@ -24,21 +24,20 @@
 
     <script type="text/ng-template" id="/home.html">
       <div class="container-fluid">
-        <div class="row" style="text-align: center;">
-          <div ng-repeat="macro in macros | orderBy: 'macro'" style="float: left;">
-            <div class="clearfix" ng-if="$index % 3 == 0"></div>
-            <div align="center" ng-repeat= "link in macro.links track by $index" style="float:left; height:350px">
-              <span align="center"><h3>{{macro.macro}}<span ng-if="macro.links.length > 1"> ({{$index+1}})</span></h3></span>
+        <span ng-repeat="macro in macros | orderBy: 'macro'" style="">
+          <span class="col-md-4" align="center" ng-repeat= "link in macro.links track by $index" style="height:350px">
+            <div align="center" style=""><h3>{{macro.macro}}<span ng-if="macro.links.length > 1"> ({{$index+1}})</span></h3></div>
+            <div align="center">
               <a href="{{link}}">
-              <img align="center" class="col-md-4" src="{{link}}" class="img-thumbnail" ng-if="img(link)" style="; width:500px; height:281px; display:inline-block">
-              <video align="center" class="col-md-4" ng-if="video(link)" preload="auto" autoplay="autoplay" loop="loop" style="float: left; width:500px; max-height:281px; display:inline-block">
+              <img src="{{link}}" class="img-thumbnail" ng-if="img(link)" style="width:500px; height:281px;">
+              <video ng-if="video(link)" preload="auto" autoplay="autoplay" loop="loop" style="width:500px; max-height:281px;"">
                 <source src="{{trustAsResourceUrl(link)}}" type="video/mp4"></source>
               </video>
-			  <div class='gfyitem' data-id="{{gfycatDataID(link)}}" ng-if="gfycat(link)" style="float: left; width:500px; max-height:281px; display:inline-block"></div>
+  		    <span class='gfyitem' data-id="{{gfycatDataID(link)}}" ng-if="gfycat(link)" style="width:500px; max-height:281px;"></span>
               </a>
             </div>
-          </div>
-        </div>
+          </span>
+        </span>
     </script>
   </body>
 </html>

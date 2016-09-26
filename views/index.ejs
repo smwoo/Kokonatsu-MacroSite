@@ -27,7 +27,7 @@
         <div class="row" style="text-align: center;">
           <div ng-repeat="macro in macros | orderBy: 'macro'" style="float: left;">
             <div class="clearfix" ng-if="$index % 3 == 0"></div>
-            <div align="center" ng-repeat= "link in macro.links" style="float:left; height:350px">
+            <div align="center" ng-repeat= "link in macro.links track by $index" style="float:left; height:350px">
               <span align="center"><h3>{{macro.macro}}<span ng-if="macro.links.length > 1"> ({{$index+1}})</span></h3></span>
               <a href="{{link}}">
               <img align="center" class="col-md-4" src="{{link}}" class="img-thumbnail" ng-if="img(link)" style="; width:500px; height:281px; display:inline-block">

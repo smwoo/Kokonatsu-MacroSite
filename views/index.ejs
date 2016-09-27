@@ -23,20 +23,20 @@
 
 
     <script type="text/ng-template" id="/home.html">
-      <div class="container-fluid">
+      <div class="container-fluid" align="center">
         <span ng-repeat="macro in macros | orderBy: 'macro'" style="">
-          <span class="col-md-4" align="center" ng-repeat= "link in macro.links track by $index" style="height:350px">
-            <div align="center" style=""><h3>{{macro.macro}}<span ng-if="macro.links.length > 1"> ({{$index+1}})</span></h3></div>
-            <div align="center">
+          <div ng-repeat= "link in macro.links track by $index" style="display:inline-block; margin: 0px 5px;">
+            <div style="float:top; "><h3>{{macro.macro}}<span ng-if="macro.links.length > 1"> ({{$index+1}})</span></h3></div>
+            <div style="float:left">
               <a href="{{link}}">
-              <img src="{{link}}" class="img-thumbnail" ng-if="img(link)" style="width:500px; height:281px;">
-              <video ng-if="video(link)" preload="auto" autoplay="autoplay" loop="loop" style="width:500px; max-height:281px;"">
+              <img src="{{link}}" class="img-thumbnail" ng-if="img(link)" style="width:450px; height:252px;">
+              <video ng-if="video(link)" preload="auto" autoplay="autoplay" loop="loop" style="width:450px; height:252px;"">
                 <source src="{{trustAsResourceUrl(link)}}" type="video/mp4"></source>
               </video>
-  		    <span class='gfyitem' data-id="{{gfycatDataID(link)}}" ng-if="gfycat(link)" style="width:500px; max-height:281px;"></span>
+  		    <span class='gfyitem' data-id="{{gfycatDataID(link)}}" ng-if="gfycat(link)" style="width:450px; height:252px;"></span>
               </a>
             </div>
-          </span>
+          </div>
         </span>
     </script>
   </body>

@@ -1,22 +1,35 @@
-var app = angular.module('kokonatsu', ['ui.router']);
+var app = angular.module('kokonatsu', ['ui.router','angularUtils.directives.dirPagination']);
 
 app.factory('macros', ['$http', function($http){
     var o = {
-        macros: []
+        macros: [],
+        macrosPagnation: []
     };
 
     o.getAll = function(){
         return $http.get('/macros').success(function(data){
             data.forEach(function(macro){
                 macro.links.forEach(function(link, i){
+                    var macroTemp = JSON.parse(JSON.stringify(macro));
                     console.log( typeof(link));
                     if(String(link).endsWith("gifv")){
                         macro.links[i] = link.replace("gifv", "mp4");
                     }
+                    
+                    macroTemp.links = [];
+                    
+                    if(macro.links.length > 1)
+                    {
+                        macroTemp.index = i;  
+                    }
+                    
+                    macroTemp.links.push(macro.links[i]);
+                    o.macrosPagnation.push(macroTemp);
                 });
             });
-
             angular.copy(data, o.macros);
+            console.log(o.macrosPagnation);
+            
         });
     };
 
@@ -28,7 +41,7 @@ app.controller('MainCtrl', [
 '$scope',
 'macros',
 function($sce, $scope, macros){
-    $scope.macros = macros.macros;
+    $scope.macros = macros.macrosPagnation;
 
     $scope.gfycat = function(link) {
         if(link.includes("gfycat.com")) return true;
@@ -45,12 +58,16 @@ function($sce, $scope, macros){
         return false;
     };
 
-    $scope.img = function(link){
+    $scope.img = function(macro, link){
         if(link.endsWith("mp4") || link.includes("gfycat.com")) return false;
         return true;
     };
 
     $scope.trustAsResourceUrl = $sce.trustAsResourceUrl;
+    
+    $scope.pageChanged = function() {
+        gfyCollection.init();
+    }
 }]);
 
 app.config([

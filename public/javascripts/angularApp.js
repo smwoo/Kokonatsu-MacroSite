@@ -65,8 +65,12 @@ function($sce, $scope, macros){
 
     $scope.trustAsResourceUrl = $sce.trustAsResourceUrl;
     
-    $scope.pageChanged = function() {
+    $scope.reloadGfycat = function() {
         gfyCollection.init();
+    }
+    
+    $scope.pageChanged = function() {
+        setTimeout(function() {gfyCollection.init();}, 100);
     }
 }]);
 

@@ -16,7 +16,7 @@
        <form class="form-inline" align="center">
         <div class="form-group">
             <label >Search</label>
-            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+            <input type="text" ng-model="search" class="form-control" placeholder="Search" ng-change="reloadGfycat()">
         </div>
     </form>
 
@@ -47,7 +47,7 @@
         </span>
     </script>
       <div style="text-align:center">
-        <dir-pagination-controls on-page-change="pageChange()" max-size="30" align="center"></dir-pagination-controls>
+        <dir-pagination-controls on-page-change="pageChanged()" max-size="30" align="center"></dir-pagination-controls>
       </div>
         
   </body>

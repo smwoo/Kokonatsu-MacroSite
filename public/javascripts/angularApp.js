@@ -15,21 +15,21 @@ app.factory('macros', ['$http', function($http){
                     if(String(link).endsWith("gifv")){
                         macro.links[i] = link.replace("gifv", "mp4");
                     }
-                    
+
                     macroTemp.links = [];
-                    
+
                     if(macro.links.length > 1)
                     {
-                        macroTemp.index = i;  
+                        macroTemp.index = i;
                     }
-                    
+
                     macroTemp.links.push(macro.links[i]);
                     o.macrosPagnation.push(macroTemp);
                 });
             });
             angular.copy(data, o.macros);
             console.log(o.macrosPagnation);
-            
+
         });
     };
 
@@ -42,17 +42,21 @@ app.controller('MainCtrl', [
 'macros',
 function($sce, $scope, macros){
     $scope.macros = macros.macrosPagnation;
+    $scope.displayMacros = $scope.macros;
+
+    $scope.alphabet = ["ALL","?","#","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+    $scope.displayLetter;
 
     $scope.gfycat = function(link) {
         if(link.includes("gfycat.com")) return true;
         return false;
     }
-    
+
     $scope.gfycatDataID = function(link) {
         var index = link.lastIndexOf("/");
         return link.substring(index+1);
     }
-    
+
     $scope.video = function(link){
         if(link.endsWith("mp4")) return true;
         return false;
@@ -64,13 +68,45 @@ function($sce, $scope, macros){
     };
 
     $scope.trustAsResourceUrl = $sce.trustAsResourceUrl;
-    
+
     $scope.reloadGfycat = function() {
         gfyCollection.init();
     }
-    
+
     $scope.pageChanged = function() {
         setTimeout(function() {gfyCollection.init();}, 100);
+    }
+
+    $scope.filterAlphabet = function(letter){
+        if(letter == "ALL"){
+            $scope.displayMacros = $scope.macros;
+        }
+        else if(letter == "#"){
+            $scope.displayMacros = [];
+            $scope.macros.forEach(function(macro){
+                if(!isNaN(parseInt(macro.macro[0]))){
+                    $scope.displayMacros.push(macro);
+                }
+            });
+        }
+        else if(letter == "?"){
+            $scope.displayMacros = [];
+            $scope.macros.forEach(function(macro){
+                var asciiCode = macro.macro.charCodeAt(0);
+                if(!((asciiCode >= 65 && asciiCode <= 90) || (asciiCode >= 97 && asciiCode <= 122) || (asciiCode >= 48 && asciiCode <= 57))){
+                    $scope.displayMacros.push(macro);
+                }
+            });
+        }
+        else{
+            var startLetter = letter.toLowerCase();
+            $scope.displayMacros = [];
+            $scope.macros.forEach(function(macro){
+                if(macro.macro.startsWith(startLetter)){
+                    $scope.displayMacros.push(macro);
+                }
+            });
+        }
     }
 }]);
 

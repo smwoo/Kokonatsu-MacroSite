@@ -12,26 +12,34 @@
     <div class="row" align = "center">
       <h1>Kokonatsu Macros</h1>
     </div>
-      
-       <form class="form-inline" align="center">
-        <div class="form-group">
+
+
+    <nav class="navbar navbar-default" style="margin: 0 20px">
+      <div class="container-fluid" align="center" style="">
+        <!-- TODO add guild selection -->
+        <!-- <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">{{displayGuild}} <span class="caret"></span></button>
+        <div class="dropdown-menu" ng-repeat="guild in guilds" ng-if="guild != displayGuild">
+          <button type="button" class="btn btn-primary">{{guild}}</button>
+        </div> -->
+
+        <form class="navbar-form navbar-right" style="">
+          <div class="form-group">
             <label >Search</label>
             <input type="text" ng-model="search.macro" class="form-control" placeholder="Search" ng-change="reloadGfycat()">
-        </div>
-    </form>
-
-    <!-- <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <ul class="nav navbar-nav" ng-repeat="guild in guilds">
-          <li><a href="#">{{guild}}</a></li>
-        </ul>
+          </div>
+        </form>
       </div>
-    </nav> -->
+    </nav>
     <ui-view></ui-view>
 
     <script type="text/ng-template" id="/home.html">
+      <div class = container-fluid align="center"><nav>
+        <div class="button-group btn-group-sm" ng-repeat="letter in alphabet" style="display:inline-block; margin: 10px 5px">
+          <button type="button" class="btn btn-primary" ng-click="filterAlphabet(letter)">{{letter}}</button>
+        </div>
+      </nav></div>
       <div class="container-fluid" align="center">
-        <span dir-paginate="macro in macros | orderBy: ['macro','index'] | filter:search | itemsPerPage: 12" style="">
+        <span dir-paginate="macro in displayMacros | orderBy: ['macro','index'] | filter:search | itemsPerPage: 12" style="">
            <div style="display:inline-block; margin: 0px 5px;">
             <div style="float:top"><h3>{{macro.macro}}<span ng-if="macro.index>=0"> ({{macro.index+1}})</span></h3></div>
             <div style="float:left">
@@ -45,10 +53,11 @@
             </div>
           </div>
         </span>
-    </script>
+      </div>
       <div style="text-align:center">
         <dir-pagination-controls on-page-change="pageChanged()" max-size="30" align="center"></dir-pagination-controls>
       </div>
-        
+    </script>
+
   </body>
 </html>

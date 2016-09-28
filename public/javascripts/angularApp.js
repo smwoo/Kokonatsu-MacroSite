@@ -2,8 +2,7 @@ var app = angular.module('kokonatsu', ['ui.router','angularUtils.directives.dirP
 
 app.factory('macros', ['$http', function($http){
     var o = {
-        macros: [],
-        macrosPagnation: []
+        macros: []
     };
 
     o.getAll = function(){
@@ -11,7 +10,6 @@ app.factory('macros', ['$http', function($http){
             data.forEach(function(macro){
                 macro.links.forEach(function(link, i){
                     var macroTemp = JSON.parse(JSON.stringify(macro));
-                    console.log( typeof(link));
                     if(String(link).endsWith("gifv")){
                         macro.links[i] = link.replace("gifv", "mp4");
                     }
@@ -24,12 +22,9 @@ app.factory('macros', ['$http', function($http){
                     }
 
                     macroTemp.links.push(macro.links[i]);
-                    o.macrosPagnation.push(macroTemp);
+                    o.macros.push(macroTemp);
                 });
             });
-            angular.copy(data, o.macros);
-            console.log(o.macrosPagnation);
-
         });
     };
 
@@ -41,7 +36,7 @@ app.controller('MainCtrl', [
 '$scope',
 'macros',
 function($sce, $scope, macros){
-    $scope.macros = macros.macrosPagnation;
+    $scope.macros = macros.macros;
     $scope.displayMacros = $scope.macros;
 
     $scope.alphabet = ["ALL","?","#","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];

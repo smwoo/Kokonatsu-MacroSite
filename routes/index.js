@@ -5,7 +5,7 @@ var router = express.Router();
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var dbUrl = 'mongodb://admin:password@ds047612.mlab.com:47612/kokonatsu';
-var hostname = 'localhost'
+var hostname = 'kokonatsu-macros.herokuapp.com'
 var clientId = '224633471732023298';
 var clientSecret = '1aW0lQKCPypqsjs18Pjr1KlM-I0OHTp8';
 

@@ -42,6 +42,9 @@ function($sce, $scope, macros){
     $scope.alphabet = ["ALL","#","?","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
     $scope.displayLetter;
 
+    $scope.sortKey = 'macro';
+    $scope.reverse = false;
+
     $scope.currentPage = 1;
 
     $scope.gfycat = function(link) {
@@ -107,6 +110,13 @@ function($sce, $scope, macros){
             });
         }
         gfyCollection.init();
+        $scope.currentPage = 1;
+    }
+
+    $scope.setSortKey = function(key){
+        $scope.sortKey = key;
+        if(key == 'macro') $scope.reverse = false;
+        else if(key == 'usage') $scope.reverse = true;
         $scope.currentPage = 1;
     }
 }]);

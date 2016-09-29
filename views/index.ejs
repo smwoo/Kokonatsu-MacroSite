@@ -1,7 +1,9 @@
 <html>
   <head>
     <title>Kokonatsu Macros</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://assets.gfycat.com/gfycat.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
@@ -28,17 +30,14 @@
         <form style="margin-top:15px">
           <div class="form-group row">
             <div class="col-md-11"><input type="text" ng-model="search" class="form-control" placeholder="Search"  ng-change="reloadGfycat()"></div>
-            <div class="dropdown">
+            <div class="dropdown col-md-1">
               <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Dropdown
+                Sort By
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
+                <li ng-click="setSortKey('macro')"><a href="#">Macro Name</a></li>
+                <li ng-click="setSortKey('usage')"><a href="#">Usage</a></li>
               </ul>
             </div>
           </div>
@@ -50,7 +49,7 @@
         </div>
       </nav></div>
       <div class="container-fluid" align="center">
-        <span dir-paginate="macro in displayMacros | orderBy: ['macro','index'] | filter:search | itemsPerPage: 12" current-page="currentPage" style="">
+        <span dir-paginate="macro in displayMacros | orderBy: [sortKey,'index'] : reverse | filter:search | itemsPerPage: 12" current-page="currentPage" style="">
            <div style="display:inline-block; margin: 0px 5px;">
             <div style="float:top"><h3>{{macro.macro}}<span ng-if="macro.index>=0"> ({{macro.index+1}})</span></h3></div>
             <div style="float:left">

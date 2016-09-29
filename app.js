@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var session = require('express-session');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -30,6 +32,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+
+var sess = {
+    secret: 'michael loves lolis',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {}
+}
+
+if (app.get('env') === 'production') {
+    sess.cookie.secure = true;
+}
+
+app.use(session(sess));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -42,6 +42,8 @@ function($sce, $scope, macros){
     $scope.alphabet = ["ALL","#","?","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
     $scope.displayLetter;
 
+    $scope.currentPage = 1;
+
     $scope.gfycat = function(link) {
         if(link.includes("gfycat.com")) return true;
         return false;
@@ -65,7 +67,9 @@ function($sce, $scope, macros){
     $scope.trustAsResourceUrl = $sce.trustAsResourceUrl;
 
     $scope.reloadGfycat = function() {
+        $scope.currentPage = 1;
         gfyCollection.init();
+        console.log($scope.currentPage);
     }
 
     $scope.pageChanged = function() {
@@ -102,6 +106,8 @@ function($sce, $scope, macros){
                 }
             });
         }
+        gfyCollection.init();
+        $scope.currentPage = 1;
     }
 }]);
 

@@ -12,34 +12,32 @@
     <div class="row" align = "center">
       <h1>Kokonatsu Macros</h1>
     </div>
-
-
-    <nav class="navbar navbar-default" style="margin: 0 20px">
-      <div class="container-fluid" align="center" style="">
-        <!-- TODO add guild selection -->
-        <!-- <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">{{displayGuild}} <span class="caret"></span></button>
-        <div class="dropdown-menu" ng-repeat="guild in guilds" ng-if="guild != displayGuild">
-          <button type="button" class="btn btn-primary">{{guild}}</button>
-        </div> -->
-
-        <form class="navbar-form navbar-right" style="">
-          <div class="form-group">
-            <label >Search</label>
-            <input type="text" ng-model="search.macro" class="form-control" placeholder="Search" ng-change="reloadGfycat()">
-          </div>
-        </form>
-      </div>
-    </nav>
     <ui-view></ui-view>
 
     <script type="text/ng-template" id="/home.html">
+      <nav class="navbar navbar-default" style="margin: 0 20px">
+        <div class="container-fluid" align="center" style="">
+          <!-- TODO add guild selection -->
+          <!-- <button type="button" class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">{{displayGuild}} <span class="caret"></span></button>
+          <div class="dropdown-menu" ng-repeat="guild in guilds" ng-if="guild != displayGuild">
+            <button type="button" class="btn btn-primary">{{guild}}</button>
+          </div> -->
+
+          <form class="navbar-form navbar-right" style="">
+            <div class="form-group">
+              <label >Search</label>
+              <input type="text" ng-model="search.macro" class="form-control" placeholder="Search" ng-change="reloadGfycat()">
+            </div>
+          </form>
+        </div>
+      </nav>
       <div class = container-fluid align="center"><nav>
         <div class="button-group btn-group-sm" ng-repeat="letter in alphabet" style="display:inline-block; margin: 10px 5px">
           <button type="button" class="btn btn-primary" ng-click="filterAlphabet(letter)">{{letter}}</button>
         </div>
       </nav></div>
       <div class="container-fluid" align="center">
-        <span dir-paginate="macro in displayMacros | orderBy: ['macro','index'] | filter:search | itemsPerPage: 12" style="">
+        <span dir-paginate="macro in displayMacros | orderBy: ['macro','index'] | filter:search | itemsPerPage: 12" current-page="currentPage" style="">
            <div style="display:inline-block; margin: 0px 5px;">
             <div style="float:top"><h3>{{macro.macro}}<span ng-if="macro.index>=0"> ({{macro.index+1}})</span></h3></div>
             <div style="float:left">

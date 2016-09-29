@@ -3,6 +3,6 @@ The Kokonatsu-MacroSite deisplay all the macros that have been created in your s
 The purpose of this site is for users to easily find and manage all of their server's macros.
 
 #ToDo
-* Add OAuth to retrieve user details (currently hard coded to only display my personal server's macros)
+* Use API rest calls to populate user's guilds and display macros corresponding to particular guild
 * Sort Macros by usage
 * Vote system to determine which macros to delete

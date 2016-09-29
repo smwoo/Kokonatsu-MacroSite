@@ -4,10 +4,10 @@ var router = express.Router();
 var session = require('express-session');
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
-var dbUrl = 'mongodb://admin:password@ds047612.mlab.com:47612/kokonatsu';
-var hostname = 'kokonatsu-macros.herokuapp.com'
-var clientId = '224633471732023298';
-var clientSecret = '1aW0lQKCPypqsjs18Pjr1KlM-I0OHTp8';
+var dbUrl = process.env.KOKONATSUDB
+var hostname = process.env.HOSTNAME;
+var clientId = process.env.CLIENTID;
+var clientSecret = process.env.CLIENTSECRET;
 
 var sess = {
     secret: 'michael loves lolis',
@@ -23,7 +23,8 @@ router.get('/', function(req, res, next) {
     if (!req.session.token) {
         req.session.token = 123;
     }
-    res.render('landing', { title: 'Express' });
+    // res.render('landing', { title: 'Express' });
+    res.redirect('/login');
 });
 
 router.get('/login', function(req, res, next) {
@@ -36,7 +37,7 @@ router.get('/login', function(req, res, next) {
 
 router.get('/callback', function(req, res, next) {
     var return_code = req.query.code;
-    
+
     request.post('https://discordapp.com/api/oauth2/token', {form: {
         code : return_code,
         client_id : clientId,
@@ -51,39 +52,48 @@ router.get('/callback', function(req, res, next) {
         req.session.refresh_token = jsonBody.refresh_token;
         res.redirect('/index');
     });
-        
+
 });
 
 router.get('/index', function(req, res, nest) {
-    res.render('index', { title: 'Express' });
+    if(!req.session.access_token){
+        res.redirect('/login');
+    }
+    else{
+        res.render('index', { title: 'Express' });
+    }
 });
 
 router.get('/macros', function(req, res, next) {
-    
-    var options = {
-        url: 'https://discordapp.com/api/users/@me/guilds',
-        headers: {
-        'Authorization' : req.session.token_type + " " + req.session.access_token
-        }
+    if(!req.session.access_token){
+        res.redirect('/login');
     }
-    
-    request.get(options, function (err, response, body) {
-        console.log(body);
-        MongoClient.connect(dbUrl, function(err, db){
-            if(err){
-                console.log(err);
+    else{
+        var options = {
+            url: 'https://discordapp.com/api/users/@me/guilds',
+            headers: {
+            'Authorization' : req.session.token_type + " " + req.session.access_token
             }
-            db.collection('Macros', function(err, macros){
-                macros.find({guild: {$eq: '137974531175350272'}}).toArray(function(err, macroArray){
-                    res.json(macroArray);
+        }
+
+        request.get(options, function (err, response, body) {
+            console.log(body);
+            MongoClient.connect(dbUrl, function(err, db){
+                if(err){
+                    console.log(err);
+                }
+                db.collection('Macros', function(err, macros){
+                    macros.find({guild: {$eq: '137974531175350272'}}).toArray(function(err, macroArray){
+                        res.json(macroArray);
+                    });
                 });
             });
         });
-    });
-        
-   
-    
-    
+    }
+
+
+
+
 });
 
 module.exports = router;

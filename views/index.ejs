@@ -31,13 +31,12 @@
           <div class="form-group row">
             <div class="col-md-11"><input type="text" ng-model="search" class="form-control" placeholder="Search"  ng-change="reloadGfycat()"></div>
             <div class="dropdown col-md-1">
-              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
                 Sort By
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li ng-click="setSortKey('macro')"><a href="#">Macro Name</a></li>
-                <li ng-click="setSortKey('usage')"><a href="#">Usage</a></li>
+              <ul class="dropdown-menu">
+                <li ng-click="setSortKey(key)" ng-repeat="key in sortKeys"><a href="#">{{key}}</a></li>
               </ul>
             </div>
           </div>
@@ -48,8 +47,8 @@
           <button type="button" class="btn btn-primary" ng-click="filterAlphabet(letter)">{{letter}}</button>
         </div>
       </nav></div>
-      <div class="container-fluid" align="center">
-        <span dir-paginate="macro in displayMacros | orderBy: [sortKey,'index'] : reverse | filter:search | itemsPerPage: 12" current-page="currentPage" style="">
+      <div class="container-fluid" align="center" ng-init="setSortKey('Macro Names')">
+        <span dir-paginate="macro in displayMacros | orderBy: [sortKey,'index'] | filter:search | itemsPerPage: 12" current-page="currentPage" style="">
            <div style="display:inline-block; margin: 0px 5px;">
             <div style="float:top"><h3>{{macro.macro}}<span ng-if="macro.index>=0"> ({{macro.index+1}})</span></h3></div>
             <div style="float:left">

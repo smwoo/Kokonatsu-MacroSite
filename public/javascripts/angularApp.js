@@ -42,10 +42,11 @@ function($sce, $scope, macros){
     $scope.alphabet = ["ALL","#","?","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
     $scope.displayLetter;
 
-    $scope.sortKey = 'macro';
-    $scope.reverse = false;
+    $scope.sortKey;
 
     $scope.currentPage = 1;
+
+    $scope.sortKeys = ["Macro Names", "Usage"];
 
     $scope.gfycat = function(link) {
         if(link.includes("gfycat.com")) return true;
@@ -114,9 +115,10 @@ function($sce, $scope, macros){
     }
 
     $scope.setSortKey = function(key){
-        $scope.sortKey = key;
-        if(key == 'macro') $scope.reverse = false;
-        else if(key == 'usage') $scope.reverse = true;
+        var sortTerm;
+        if(key == "Macro Names") sortTerm = 'macro';
+        else if(key == "Usage") sortTerm = '-usage';
+        $scope.sortKey = sortTerm;
         $scope.currentPage = 1;
     }
 }]);

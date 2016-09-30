@@ -59,8 +59,8 @@
           <div style="float:left">
             <a href="{{macro.links[0]}}">
             <img src="{{macro.links[0]}}" class="img-thumbnail" ng-if="img(macro,macro.links[0])" style="width:450px; height:252px;">
-            <video ng-if="video(macro.links[0])" preload="auto" autoplay="autoplay" loop="loop" style="width:450px; max-height:252px;"">
-              <source src="{{trustAsResourceUrl(macro.links[0])}}" type="video/mp4"></source>
+            <video ng-if="video(macro.links[0])" preload="auto" autoplay="autoplay" loop="loop" style="width:450px; max-height:252px;">
+              <source src="{{trustAsResourceUrl(macro.links[0])}}" type="video/mp4">
             </video>
 		    <span class='gfyitem' data-id="{{gfycatDataID(macro.links[0])}}" ng-if="gfycat(macro.links[0])" style="width:450px; max-height:252px;"></span>
             </a>

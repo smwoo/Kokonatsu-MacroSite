@@ -147,12 +147,10 @@ app.directive('controller', function() {
                 $scope.$evalAsync(function() {
                     // Finally, directives are evaluated
                     // and templates are renderer here
-                    setTimeout(function() {
-                        var fileref=document.createElement('script');
-                        fileref.setAttribute("type","text/javascript");
-                        fileref.setAttribute("src", "https://assets.gfycat.com/gfycat.js");
-                        document.getElementsByTagName("head")[0].appendChild(fileref);
-                        }, 2000);
+                    var fileref=document.createElement('script');
+                    fileref.setAttribute("type","text/javascript");
+                    fileref.setAttribute("src", "https://assets.gfycat.com/gfycat.js");
+                    document.getElementsByTagName("head")[0].appendChild(fileref);
                 });
             });
         },

@@ -2,31 +2,35 @@ var app = angular.module('kokonatsu', ['ui.router','angularUtils.directives.dirP
 
 app.factory('macros', ['$http', function($http){
     var o = {
+        guilds: [],
         macros: []
     };
 
-    o.getAll = function(){
-        return $http.get('/macros').success(function(data){
-            data.forEach(function(macro){
-                macro.links.forEach(function(link, i){
-                    var macroTemp = JSON.parse(JSON.stringify(macro));
-                    if(String(link).endsWith("gifv")){
-                        macro.links[i] = link.replace("gifv", "mp4");
-                    }
+    $http.get("/macros").success(function(data){
+        macros = [];
+        angular.copy(data.guilds, o.guilds);
 
-                    macroTemp.links = [];
+        data.macros.forEach(function(macro){
+            macro.links.forEach(function(link, i){
+                var macroTemp = JSON.parse(JSON.stringify(macro));
+                if(String(link).endsWith("gifv")){
+                    macro.links[i] = link.replace("gifv", "mp4");
+                }
 
-                    if(macro.links.length > 1)
-                    {
-                        macroTemp.index = i;
-                    }
+                macroTemp.links = [];
 
-                    macroTemp.links.push(macro.links[i]);
-                    o.macros.push(macroTemp);
-                });
+                if(macro.links.length > 1)
+                {
+                    macroTemp.index = i;
+                }
+
+                macroTemp.links.push(macro.links[i]);
+                macros.push(macroTemp);
             });
         });
-    };
+
+        angular.copy(macros, o.macros);
+    });
 
     return o;
 }]);
@@ -37,16 +41,20 @@ app.controller('MainCtrl', [
 'macros',
 function($sce, $scope, macros){
     $scope.macros = macros.macros;
+    $scope.guilds = macros.guilds;
     $scope.displayMacros = $scope.macros;
 
     $scope.alphabet = ["ALL","#","?","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
     $scope.displayLetter;
 
+    $scope.sortKeys = ["Macro Names", "Usage"];
     $scope.sortKey;
+
+    $scope.guildFilter;
 
     $scope.currentPage = 1;
 
-    $scope.sortKeys = ["Macro Names", "Usage"];
+    $scope.currentTab = 0;
 
     $scope.gfycat = function(link) {
         if(link.includes("gfycat.com")) return true;
@@ -73,7 +81,6 @@ function($sce, $scope, macros){
     $scope.reloadGfycat = function() {
         $scope.currentPage = 1;
         gfyCollection.init();
-        console.log($scope.currentPage);
     }
 
     $scope.pageChanged = function() {
@@ -121,26 +128,11 @@ function($sce, $scope, macros){
         $scope.sortKey = sortTerm;
         $scope.currentPage = 1;
     }
-}]);
 
-app.config([
-'$stateProvider',
-'$urlRouterProvider',
-function($stateProvider, $urlRouterProvider) {
-
-  $stateProvider
-    .state('home', {
-      url: '/home',
-      templateUrl: '/home.html',
-      controller: 'MainCtrl',
-      resolve: {
-        macroPromise: ['macros', function(macros){
-          return macros.getAll();
-        }]
-      }
-    });
-
-  $urlRouterProvider.otherwise('home');
+    $scope.setGuild = function(guildId, index){
+        $scope.guildFilter = guildId;
+        $scope.currentTab = index;
+    }
 }]);
 
 app.directive('controller', function() {

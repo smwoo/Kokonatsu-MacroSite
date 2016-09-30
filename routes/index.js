@@ -45,7 +45,6 @@ router.get('/callback', function(req, res, next) {
         grant_type: 'authorization_code',
         redirect_uri: 'http://' + hostname + '/callback'
     }}, function (err, response, body ){
-        console.log(body);
         var jsonBody = JSON.parse(body);
         req.session.access_token = jsonBody.access_token;
         req.session.token_type = jsonBody.token_type;
@@ -77,23 +76,22 @@ router.get('/macros', function(req, res, next) {
         }
 
         request.get(options, function (err, response, body) {
-            console.log(body);
-            MongoClient.connect(dbUrl, function(err, db){
-                if(err){
-                    console.log(err);
-                }
-                db.collection('Macros', function(err, macros){
-                    macros.find({guild: {$eq: '137974531175350272'}}).toArray(function(err, macroArray){
-                        res.json(macroArray);
-                    });
+            var guildIds = [];
+            var Guilds = JSON.parse(body);
+            Guilds.forEach(function(guild){
+                guildIds.push(guild.id);
+            });
+            MongoClient.connect(dbUrl)
+            .then(function(db){
+                return db.collection('Macros');
+            })
+            .then(function(macros){
+                macros.find({guild: {$in: guildIds}}).toArray(function(err, macroArray){
+                    res.json({guilds: Guilds, macros: macroArray});
                 });
             });
         });
     }
-
-
-
-
 });
 
 module.exports = router;

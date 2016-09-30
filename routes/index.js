@@ -9,6 +9,20 @@ var hostname = process.env.HOSTNAME;
 var clientId = process.env.CLIENTID;
 var clientSecret = process.env.CLIENTSECRET;
 
+var botGuildOptions = {
+    url: 'https://discordapp.com/api/users/@me/guilds',
+    headers: {
+        "User-Agent" : "Kokonatsu (http://test.com, v0.1)",
+        "Authorization" : "Bot "+process.env.BOTTOKEN
+    }
+}
+
+var botGuildPromise = new Promise(function(resolve, reject){
+    request.get(botGuildOptions, function (err, response, body) {
+        resolve(JSON.parse(body));
+    });
+});
+
 var sess = {
     secret: 'michael loves lolis',
     resave: false,
@@ -64,34 +78,43 @@ router.get('/index', function(req, res, nest) {
 });
 
 router.get('/macros', function(req, res, next) {
-    if(!req.session.access_token){
-        res.redirect('/login');
-    }
-    else{
-        var options = {
-            url: 'https://discordapp.com/api/users/@me/guilds',
-            headers: {
-            'Authorization' : req.session.token_type + " " + req.session.access_token
-            }
+    botGuildPromise.then(function(botGuilds){
+        if(!req.session.access_token){
+            res.redirect('/login');
         }
+        else{
+            var options = {
+                url: 'https://discordapp.com/api/users/@me/guilds',
+                headers: {
+                'Authorization' : req.session.token_type + " " + req.session.access_token
+                }
+            }
 
-        request.get(options, function (err, response, body) {
-            var guildIds = [];
-            var Guilds = JSON.parse(body);
-            Guilds.forEach(function(guild){
-                guildIds.push(guild.id);
-            });
-            MongoClient.connect(dbUrl)
-            .then(function(db){
-                return db.collection('Macros');
-            })
-            .then(function(macros){
-                macros.find({guild: {$in: guildIds}}).toArray(function(err, macroArray){
-                    res.json({guilds: Guilds, macros: macroArray});
+            request.get(options, function (err, response, body) {
+                var guildIds = [];
+                var guilds = JSON.parse(body);
+                var sharedGuilds = [];
+                guilds.forEach(function(guild){
+                    botGuilds.forEach(function(botGuild){
+                        if(guild.id == botGuild.id){
+                            guildIds.push(guild.id);
+                            sharedGuilds.push(guild);
+                        }
+                    });
+                });
+                MongoClient.connect(dbUrl)
+                .then(function(db){
+                    return db.collection('Macros');
+                })
+                .then(function(macros){
+                    console.log(sharedGuilds);
+                    macros.find({guild: {$in: guildIds}}).toArray(function(err, macroArray){
+                        res.json({guilds: sharedGuilds, macros: macroArray});
+                    });
                 });
             });
-        });
-    }
+        }
+    });
 });
 
 module.exports = router;

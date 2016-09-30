@@ -20,7 +20,7 @@
       <div class="row">
         <nav style="margin: 0 20px">
           <ul class="nav nav-tabs">
-            <li ng-repeat="guild in guilds" ng-click="setGuild(guild.id, $index)" ng-init="setGuild(guilds[0], 0)" ng-class="{active: $index === currentTab}"><a href="#">{{guild.name}}</a></li>
+            <li ng-repeat="guild in guilds" ng-click="setGuild(guild.id, $index)" ng-init="setGuild(guilds[0].id, 0)" ng-class="{active: $index === currentTab}"><a href="#">{{guild.name}}</a></li>
           </ul>
         </nav>
       </div>

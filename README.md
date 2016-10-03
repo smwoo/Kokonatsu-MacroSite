@@ -1,8 +1,2 @@
-# Kokonatsu-MacroSite
-The Kokonatsu-MacroSite deisplay all the macros that have been created in your server the the [Kokonatsu Discord Bot](https://github.com/smwoo/Kokonatsu).
-The purpose of this site is for users to easily find and manage all of their server's macros.
-
-#ToDo
-* Use API rest calls to populate user's guilds and display macros corresponding to particular guild
-* Sort Macros by usage
-* Vote system to determine which macros to delete
+# [Project Moved](https://github.com/smwoo/Kokonatsu)
+As of this commit this repo has been merged with the [Kokonatsu](https://github.com/smwoo/Kokonatsu) Repository. This was done to allow hosting of the site and bot from a single heroku dyno as well as to better organize the interactions between the bot and the site. Please check the Kokonatsu repository for future developments.
